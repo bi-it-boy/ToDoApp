@@ -1,0 +1,16 @@
+services: # ist die Liste aller Container, die diese Datei kennt
+  mariadb: # Name vom Service innerhalb dieser Datei 
+    image: mariadb:11.8.8
+    container_name: todoapp-db #Name für laufenden Container 
+    environment: # alle Infos darin werden beim allerersten Start vom Image gelesen, damit es sich selber konfigurieren kann
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: todoapp
+      MYSQL_USER: todoapp_user
+      MYSQL_PASSWORD: todoapp_pass
+    ports:
+      - "3307:3306" #Host:Container
+    volumes:
+      - mariadb_data:/var/lib/mysql # so werden Tasks erhalten, auch wenn ich Container lösche (solange das Volume existiert)
+
+volumes:
+  mariadb_data: # hier deklarieren wir dieses Volume 
