@@ -1,8 +1,10 @@
 using TodoApp.Web.Components;
 using TodoApp.Web.Data;
+using TodoApp.Web.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<DapperContext>(); 
+builder.Services.AddScoped<TaskRepository>(); 
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
