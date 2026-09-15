@@ -13,4 +13,4 @@ services: # ist die Liste aller Container, die diese Datei kennt
       - mariadb_data:/var/lib/mysql # so werden Tasks erhalten, auch wenn ich Container lösche (solange das Volume existiert)
 
 volumes:
-  mariadb_data: # hier deklarieren wir dieses Volume 
+  mariadb_data: # hier deklarieren wir dieses Volume

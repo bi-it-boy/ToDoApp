@@ -3,13 +3,13 @@ using MySqlConnector;
 
 namespace TodoApp.Web.Data; 
 
-public class DapperContxt
+public class DapperContext
 {
     private readonly string _connectionString; 
-    public DapperContxt(IConfiguration configuration)
+    public DapperContext(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("Default Connection")
-            ?? throw new InvalidOperationException("Connection string 'Default Connection' not found.")
+        _connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'Default Connection' not found.");
     }
     public IDbConnection CreateConnection()
         => new MySqlConnection(_connectionString);
