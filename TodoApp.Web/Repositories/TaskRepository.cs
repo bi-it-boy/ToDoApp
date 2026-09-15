@@ -35,7 +35,39 @@ public class TaskRepository
             SELECT LAST_INSERT_ID();
             """; 
         using var connection = _context.CreateConnection(); 
-        return await connection.ExecuteScalarAsync<int>(sql, task); 
+        return await connection.ExecuteScalarAsync<int>(sql, new
+        {
+            task.Title, 
+            task.Notes, 
+            Status = task.Status.ToString(), 
+            task.DueDate
+        }); 
+    }
 
+    public async Task<bool> UpdateAsync(TaskItem task)
+    {
+        const string sql = """
+            UPDATE Tasks 
+            SET Title = @Title, Notes = @Notes, Status = @Status, DueDate = @DueDate
+            WHERE Id = @Id
+            """; 
+        using var connection = _context.CreateConnection(); 
+        var rowsAffected = await connection.ExecuteAsync(sql, new
+        {
+            task.Id,
+            task.Title,
+            task.Notes, 
+            Status = task.Status.ToString(), 
+            task.DueDate
+        }); 
+        return rowsAffected > 0; 
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        const string sql = "DELETE FROM Tasks WHERE Id = @Id"; 
+        using var connection = _context.CreateConnection(); 
+        var rowsAffected = await connection.ExecuteAsync(sql, new { Id = id }); 
+        return rowsAffected > 0; 
     }
 }
